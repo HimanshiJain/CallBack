@@ -17,7 +17,7 @@
         android:layout_weight=".5"
         android:text="Call From"
         android:layout_gravity="center"
-        android:textColor="@color/Text_Icons"
+        android:textColor="@color/blue"
         android:elevation="10dp"/>
 
 <TextView
