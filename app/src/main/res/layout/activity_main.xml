@@ -53,11 +53,15 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/green"
+        android:background="@drawable/button_selector"
         android:layout_margin="5dp"
         android:textColor="@color/Text_Icons"
         android:elevation="10dp"
-        android:id="@+id/receive"/>
+        android:id="@+id/receive"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        />
 
     <Button
         android:layout_width="0dp"
@@ -67,10 +71,11 @@
         android:id="@+id/button"
         android:layout_alignTop="@+id/call_back"
         android:layout_toEndOf="@+id/call_back"
-        android:background="@color/red"
+        android:background="@drawable/hangup_selector"
         android:layout_margin="5dp"
         android:textColor="@color/Text_Icons"
-        android:elevation="10dp"/>
+        android:elevation="10dp"
+        android:clickable="true"/>
     </LinearLayout>
     <Button
         android:layout_width="match_parent"
@@ -78,11 +83,12 @@
         android:layout_weight="1.2"
         android:text="CallBack"
         android:textColor="@color/PrimaryText"
-        android:background="@color/Text_Icons"
+        android:background="@drawable/callback_selector"
         android:id="@+id/call_back"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:elevation="15dp"
+        android:clickable="true"
         />
 
 
