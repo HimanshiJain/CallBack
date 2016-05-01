@@ -31,7 +31,7 @@ Button callBack,hangUp,receive;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            Thread.sleep(1000,0);
+            Thread.sleep(2000,0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
