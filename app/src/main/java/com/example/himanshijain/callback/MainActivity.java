@@ -30,7 +30,11 @@ Button callBack,hangUp,receive;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        try {
+            Thread.sleep(1000,0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_main);
 
         Intent intent=getIntent();
