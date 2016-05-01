@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +25,12 @@ Button callBack,hangUp,receive;
     String incomingNumber,contact_name;
     ActionBar bar;
     TextView contact_n;
+    ImageView close;
     public static String TAG="PhoneStateReceiver";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         Intent intent=getIntent();
@@ -46,6 +49,8 @@ Button callBack,hangUp,receive;
         params.height = 1400;
         params.width = 600;
         params.y = 1;
+        close=(ImageView)findViewById(R.id.close);
+        close.setOnClickListener(this);
         callBack=(Button)findViewById(R.id.call_back);
         callBack.setOnClickListener(this);
         hangUp=(Button)findViewById(R.id.button);
@@ -129,6 +134,9 @@ Button callBack,hangUp,receive;
             i.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_UP,
                     KeyEvent.KEYCODE_HEADSETHOOK));
             sendOrderedBroadcast(i, null);
+            finish();
+        }else if(view==close){
+            finish();
         }
     }
 

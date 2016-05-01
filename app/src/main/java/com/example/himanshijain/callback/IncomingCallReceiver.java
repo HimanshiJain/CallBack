@@ -32,8 +32,9 @@ public class IncomingCallReceiver extends BroadcastReceiver {
 //                                 PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
 //                                         "MyWakelockTag");
 //                                 wakeLock.acquire();
+
                 Intent callIntent = new Intent(context,MainActivity.class);
-                callIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK  );
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT  );
                 callIntent.putExtra("number", incomingNumber);
                 callIntent.putExtra("name",contact.name);
                 //callIntent.setData(Uri.parse("tel:1127933851"));
