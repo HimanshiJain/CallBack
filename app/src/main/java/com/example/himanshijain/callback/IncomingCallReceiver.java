@@ -12,11 +12,13 @@ import android.util.Log;
 public class IncomingCallReceiver extends BroadcastReceiver {
     static String incomingNumber,name;
     ContactsListHelper contactsListHelper;
+    static boolean ring = false;
+    static boolean callReceived = false;
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
                 TelephonyManager.EXTRA_STATE_RINGING)) {
-
+            ring=true;
             // Phone number
             Log.i("call","hungup");
             contactsListHelper=new ContactsListHelper(context);
@@ -38,6 +40,11 @@ public class IncomingCallReceiver extends BroadcastReceiver {
                 callIntent.putExtra("number", incomingNumber);
                 callIntent.putExtra("name",contact.name);
                 //callIntent.setData(Uri.parse("tel:1127933851"));
+                try {
+                    Thread.sleep(2000,0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 context.startActivity(callIntent);
 
 //                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -67,10 +74,9 @@ public class IncomingCallReceiver extends BroadcastReceiver {
             // Ringing state
             // This code will execute when the phone has an incoming call
         } else if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
-                TelephonyManager.EXTRA_STATE_IDLE)
-                || intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
-                TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-
+                TelephonyManager.EXTRA_STATE_OFFHOOK)||intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
+                TelephonyManager.EXTRA_STATE_IDLE)) {
+            callReceived=true;
             // This code will execute when the call is answered or disconnected
             incomingNumber= intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
             Log.i("call","hungup");
@@ -78,6 +84,17 @@ public class IncomingCallReceiver extends BroadcastReceiver {
 
 
         }
+//        else if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(
+//                TelephonyManager.EXTRA_STATE_IDLE)
+//                ){
+//
+//                    if(ring==true && callReceived==false){
+//                        Toast.makeText(context,
+//                                "Missed call from : " + incomingNumber,
+//                                Toast.LENGTH_LONG).show();
+//
+//                    }
+//        }
 
     }
 }

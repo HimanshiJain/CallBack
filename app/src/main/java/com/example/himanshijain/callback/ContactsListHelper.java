@@ -85,6 +85,7 @@ public class ContactsListHelper extends SQLiteOpenHelper {
         db.delete(TABLE_CONTACTS, CONTACT_ENTRY_ID + " = ?",
                 new String[]{String.valueOf(book_id)});
         Log.i("delete", "done");
+        db.close();
     }
 
     public ArrayList getAllContacts() {
@@ -116,12 +117,14 @@ public class ContactsListHelper extends SQLiteOpenHelper {
                         updatedC.phone_no);
                 contacts.add(contact);}
         };
+        db.close();
+        cursor.close();
         return contacts;
     }
 
     public Contact getContact(String phone_no){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{CONTACT_NAME_TITLE,CONTACT_ENTRY_ID,CONTACT_NAME_PHONE_NUMBER},
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{CONTACT_NAME_TITLE, CONTACT_ENTRY_ID, CONTACT_NAME_PHONE_NUMBER},
                 CONTACT_NAME_PHONE_NUMBER + "=?", new String[]{phone_no},
                 null, null, null);
         Contact contact;
@@ -131,6 +134,8 @@ public class ContactsListHelper extends SQLiteOpenHelper {
         }else{
             contact=new Contact();
         }
+        db.close();
+        cursor.close();
         return contact;
     }
 
@@ -138,15 +143,19 @@ public class ContactsListHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Log.i("delete", "preparing");
 
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{CONTACT_NAME_PHONE_NUMBER}, CONTACT_NAME_PHONE_NUMBER+"=?",
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{CONTACT_NAME_PHONE_NUMBER}, CONTACT_NAME_PHONE_NUMBER + "=?",
                 new String[]{String.valueOf(number)}, null, null, null, null);
         if(cursor.moveToFirst()){
             Log.i("isContact", "present " + cursor.getString(cursor.getColumnIndex(CONTACT_NAME_PHONE_NUMBER)));
-
+            db.close();
+            cursor.close();
             return true;
         }
-        else
+        else{
+            db.close();
+            cursor.close();
             return false;
+        }
     }
 
     public Contact getUpdatedDetails(String id){
@@ -164,8 +173,11 @@ public class ContactsListHelper extends SQLiteOpenHelper {
                     number);
             Log.i("details","id "+id+" name "+cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))+
             " number "+number);
+            cursor.close();
             return contact;
-        }else return  null;
+        }else {
+            cursor.close();
+            return  null;}
     }
 
     public String formatNumber(String number){

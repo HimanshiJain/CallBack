@@ -30,11 +30,11 @@ Button callBack,hangUp,receive;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            Thread.sleep(2000,0);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000,0);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         setContentView(R.layout.activity_main);
 
         Intent intent=getIntent();
@@ -112,6 +112,7 @@ Button callBack,hangUp,receive;
     @Override
     public void onClick(View view) {
         if(view==callBack){
+
             String  finalNumber;
             killCall(getApplicationContext());
             Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -122,24 +123,34 @@ Button callBack,hangUp,receive;
                 finalNumber=incomingNumber.substring(3);
             else
             finalNumber=incomingNumber;
-            Log.i("öncallbacknumber",""+finalNumber+" "+incomingNumber);
-            callIntent.setData(Uri.parse("tel:"+incomingNumber
+            Log.i("öncallbacknumber", "" + finalNumber + " " + incomingNumber);
+            try {
+                Thread.sleep(3000,0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            callIntent.setData(Uri.parse("tel:" + incomingNumber
             ));
             startActivity(callIntent);
-            Toast.makeText(getApplicationContext(),"Callbacked",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Calling Back...",Toast.LENGTH_SHORT).show();
+//            android.os.Process.killProcess(android.os.Process.myPid());
             finish();
         }
         else if(view==hangUp){
             killCall(getApplicationContext());
             Toast.makeText(getApplicationContext(),"HangedUp",Toast.LENGTH_SHORT).show();
+//            android.os.Process.killProcess(android.os.Process.myPid());
             finish();
         }else if(view==receive){
             Intent i = new Intent(Intent.ACTION_MEDIA_BUTTON);
+//            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); Can't use FLAG_RECEIVER_BOOT_UPGRADE here
             i.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_UP,
                     KeyEvent.KEYCODE_HEADSETHOOK));
             sendOrderedBroadcast(i, null);
+//            android.os.Process.killProcess(android.os.Process.myPid());
             finish();
         }else if(view==close){
+//            android.os.Process.killProcess(android.os.Process.myPid());
             finish();
         }
     }
